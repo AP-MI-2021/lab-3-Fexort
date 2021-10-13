@@ -16,7 +16,7 @@ def max_get_longest_alternating_signs(list):
             if get_longest_alternating_signs(list[i:j+1]) and len(list[i:j+1])>len(maxList):
                 maxList = list[i:j+1]
 def get_longest_alternating_signs(list):
-    for i in range (1, len(list)-1):
+    for i in range (0, len(list)-1):
         if list[i] >= 0 and list[i+1] >= 0:
             return False
         elif list[i] < 0 and list[i+1] < 0:
@@ -57,23 +57,23 @@ def max_get_longest_sorted_asc(list):
             if get_longest_sorted_asc(list[i:j+1]) and len(list[i:j+1])>len(maxList):
                 maxList = list[i:j+1]
 def get_longest_sorted_asc(list):
-    for i in list:
+    for i in range (0, len(list)-1):
         if (list[i] > list[i+1]):
             return False
     return True
 
 def test_get_longest_alternating_signs():
-    assert get_longest_alternating_signs([3, -5, 6, -3, 2]) == [3, -5, 6, -3, 2]
-    assert get_longest_alternating_signs([6, 6]) == 6
-    assert get_longest_alternating_signs([21, -3, 4, -3]) == [21, -3, 4, -3]
+    assert get_longest_alternating_signs([3, -5, 6, -3, 2]) == True
+    assert get_longest_alternating_signs([6, 6]) == False
+    assert get_longest_alternating_signs([21, -3, 4, -3]) == True
 def test_get_longest_prime_digits():
-    assert get_longest_prime_digits([2, 3, 7, 4]) == [2, 3, 7]
-    assert get_longest_prime_digits([2, 2, 2, 2]) == [2, 2, 2, 2]
-    assert get_longest_prime_digits([2, 3, 5, 7]) == [2, 3, 5, 7]
+    assert get_longest_prime_digits([2, 3, 7, 4]) == False
+    assert get_longest_prime_digits([2, 2, 2, 2]) == False
+    assert get_longest_prime_digits([2, 3, 5, 7]) == False
 def test_get_longest_sorted_asc():
-    assert get_longest_sorted_asc([1, 2, 5, 6]) == [1, 2, 5, 6]
-    assert get_longest_sorted_asc([1, 2, 5, 3]) == [1, 2, 5]
-    assert get_longest_sorted_asc([2, 2, 3]) == [2, 2, 3]
+    assert get_longest_sorted_asc([1, 2, 5, 6]) == True
+    assert get_longest_sorted_asc([1, 2, 5, 3]) == False
+    assert get_longest_sorted_asc([2, 2, 3]) == True
 
 
 def main():
