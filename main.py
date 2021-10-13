@@ -1,17 +1,25 @@
+def citire():
+    list = []
+    givenstring = input("datele problemei separat prin virgula")
+    numersasstring = givenstring.split(",")
+    for x in numersasstring:
+        list.append(int(x))
+    return list
 '''
 Numerele au semne alternante.
 '''
 
-
+def max_get_longest_alternating_signs(list):
+    maxList=[]
+    for i in range (len(list)):
+        for j in range (i, len(list)):
+            if get_longest_alternating_signs(list[i:j+1]) and len(list[i:j+1])>len(maxList):
+                maxList = list[i:j+1]
 def get_longest_alternating_signs(list):
-
-    s = 0
-
     for i in list:
         if list[i] * list[i+1] > 0:
-            return s
-        s = s + 1
-    return s
+            return False
+    return True
 
 
 
@@ -21,9 +29,13 @@ def get_longest_alternating_signs(list):
 Toate numerele sunt formate din cifre prime.
 '''
 
-
+def max_get_longest_prime_digits(list):
+    maxList=[]
+    for i in range (len(list)):
+        for j in range (i, len(list)):
+            if get_longest_prime_digits(list[i:j+1]) and len(list[i:j+1])>len(maxList):
+                maxList = list[i:j+1]
 def get_longest_prime_digits(list):
-    s = 0
     for i in list:
         if list[i]%10 != 2:
             return False
@@ -33,34 +45,37 @@ def get_longest_prime_digits(list):
             return False
         elif list[i] % 10 != 7:
             return False
-        s = s + 1
-    return s
+    return True
 
 '''
 Numerele sunt ordonate crescător.
 '''
+def max_get_longest_sorted_asc(list):
+    maxList=[]
+    for i in range (len(list)):
+        for j in range (i, len(list)):
+            if get_longest_sorted_asc(list[i:j+1]) and len(list[i:j+1])>len(maxList):
+                maxList = list[i:j+1]
 def get_longest_sorted_asc(list):
-    s = 0
     for i in list:
         if (list[i] > list[i+1]):
             return False
-        s = s + 1
-    return s
+    return True
 
 
 
 def test_get_longest_alternating_signs():
-    assert get_longest_alternating_signs([1, -5, 6, -3, 8]) == 4
-    assert get_longest_alternating_signs([6, 6]) == 0
-    assert get_longest_alternating_signs([21, -3, 4, -3]) == 3
+    assert get_longest_alternating_signs([1, -5, 6, -3, 8]) == [1, -5, 6, -3, 8]
+    assert get_longest_alternating_signs([6, 6]) == 6
+    assert get_longest_alternating_signs([21, -3, 4, -3]) == [21, -3, 4, -3]
 def test_get_longest_prime_digits():
-    assert get_longest_prime_digits([2, 3, 7, 4]) == False
-    assert get_longest_prime_digits([2, 2, 2, 2]) == 4
-    assert get_longest_prime_digits([2, 3, 5, 7]) == 4
+    assert get_longest_prime_digits([2, 3, 7, 4]) == [2, 3, 7]
+    assert get_longest_prime_digits([2, 2, 2, 2]) == [2, 2, 2, 2]
+    assert get_longest_prime_digits([2, 3, 5, 7]) == [2, 3, 5, 7]
 def test_get_longest_sorted_asc():
-    assert get_longest_sorted_asc([1, 2, 5, 6]) == 4
-    assert get_longest_sorted_asc([1, 2, 5, 3]) == False
-    assert get_longest_sorted_asc([2, 2, 3]) == 3
+    assert get_longest_sorted_asc([1, 2, 5, 6]) == [1, 2, 5, 6]
+    assert get_longest_sorted_asc([1, 2, 5, 3]) == [1, 2, 5]
+    assert get_longest_sorted_asc([2, 2, 3]) == [2, 2, 3]
 
 
 def main():
@@ -73,13 +88,10 @@ def main():
         print("4. Terminarea programului")
         option = input("scrie nr. optiuni: ")
         if option == 1:
-            list = []
             get_longest_alternating_signs(list)
         if option == 2:
-            list = []
             get_longest_prime_digits(list)
-        if option == 2:
-            list = []
+        if option == 3:
             get_longest_prime_digits(list)
         if option == 4:
             break
