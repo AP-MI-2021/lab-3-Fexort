@@ -16,12 +16,12 @@ def max_get_longest_alternating_signs(list):
             if get_longest_alternating_signs(list[i:j+1]) and len(list[i:j+1])>len(maxList):
                 maxList = list[i:j+1]
 def get_longest_alternating_signs(list):
-    for i in list:
-        if list[i] * list[i+1] > 0:
+    for i in range (1, len(list)-1):
+        if list[i] >= 0 and list[i+1] >= 0:
+            return False
+        elif list[i] < 0 and list[i+1] < 0:
             return False
     return True
-
-
 
 
 
@@ -62,10 +62,8 @@ def get_longest_sorted_asc(list):
             return False
     return True
 
-
-
 def test_get_longest_alternating_signs():
-    assert get_longest_alternating_signs([1, -5, 6, -3, 8]) == [1, -5, 6, -3, 8]
+    assert get_longest_alternating_signs([3, -5, 6, -3, 2]) == [3, -5, 6, -3, 2]
     assert get_longest_alternating_signs([6, 6]) == 6
     assert get_longest_alternating_signs([21, -3, 4, -3]) == [21, -3, 4, -3]
 def test_get_longest_prime_digits():
