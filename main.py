@@ -1,107 +1,167 @@
-def citire():
-    list = []
-    givenstring = input("datele problemei separat prin virgula")
-    numersasstring = givenstring.split(",")
-    for x in numersasstring:
-        list.append(int(x))
-    return list
-'''
-Numerele au semne alternante.
-'''
+def printMenu():
+    print("1. Citire date ")
+    print("2. Cea mai lungă subsecvență cu proprietatea 2 ")
+    print("3. Cea mai lungă subsecvență cu proprietatea 3 ")
+    print("4. Cea mai lungă subsecvență cu proprietatea 13 ")
+    print("x. Iesire ")
 
-def max_get_longest_alternating_signs(list):
-    maxList=[]
-    for i in range (len(list)):
-        for j in range (i, len(list)):
-            if get_longest_alternating_signs(list[i:j+1]) and len(list[i:j+1])>len(maxList):
-                maxList = list[i:j+1]
-def get_longest_alternating_signs(list):
-    for i in range (0, len(list)-1):
-        if list[i] >= 0 and list[i+1] >= 0:
-            return False
-        elif list[i] < 0 and list[i+1] < 0:
+
+def citire_lista():
+    lst = []
+    n = int(input("Dati numarul de elemente al listei: "))
+    for i in range(n):
+        lst.append(int(input("lst[" + str(i) + "]=")))
+    return lst
+
+
+def NrPrim(n):
+    '''
+    Determina daca un numar este prim
+    :param n numar intreg:
+    :return adevarat sau fals:
+    '''
+    if n < 2:
+        return False
+    for i in range(2, n // 2 + 1):
+        if n % i == 0:
             return False
     return True
 
 
-
-'''
-Toate numerele sunt formate din cifre prime.
-'''
-
-def max_get_longest_prime_digits(list):
-    maxList=[]
-    for i in range (len(list)):
-        for j in range (i, len(list)):
-            if get_longest_prime_digits(list[i:j+1]) and len(list[i:j+1])>len(maxList):
-                maxList = list[i:j+1]
-def get_longest_prime_digits(list):
-    for i in list:
-        if list[i]%10 != 2:
-            return False
-        elif list[i]%10 != 3:
-            return False
-        elif list[i] % 10 != 5:
-            return False
-        elif list[i] % 10 != 7:
+def toateElementelePrime(lst):
+    """
+    Determina daca toate numerele dintr-o secventa a listei lst sunt prime
+    :param lst - lista de numere:
+    :return True sau False:
+    """
+    for x in lst:
+        if NrPrim(x) is False:
             return False
     return True
 
-'''
-Numerele sunt ordonate crescător.
-'''
-def max_get_longest_sorted_asc(list):
-    maxList=[]
-    for i in range (len(list)):
-        for j in range (i, len(list)):
-            if get_longest_sorted_asc(list[i:j+1]) and len(list[i:j+1])>len(maxList):
-                maxList = list[i:j+1]
-def get_longest_sorted_asc(list):
-    for i in range (0, len(list)-1):
-        if (list[i] > list[i+1]):
-            return False
+
+def get_longest_all_primes(lst: list[int]):
+    """
+    Determina cea mai lunga subsecventa de numere prime
+    :param lst - lista de numere:
+    :return lista cu cea mai lunga subsecventa de numere prime din lst:
+    """
+    subsecventaMax1 = []
+    for i in range(len(lst)):
+        for j in range(len(lst)):
+            if toateElementelePrime(lst[i:j + 1]) and len(lst[i:j + 1]) > len(subsecventaMax1):
+                subsecventaMax1 = lst[i:j + 1]
+    return subsecventaMax1
+
+
+def test_get_longest_all_primes():
+    assert get_longest_all_primes([12, 7, 3, 5, 6]) == [7, 3, 5]
+    assert get_longest_all_primes([2, 4, 6]) == [2]
+    assert get_longest_all_primes([8, 4, 6]) == []
+
+
+test_get_longest_all_primes()
+
+
+def semnNumar(x):
+    """
+    Determina semnul x
+    :param x:
+    :return true semnul +, false semnul -:
+    """
+    if (x < 0):
+        return False
+    else:
+        return True
+
+
+def toateSemneleAlternante(lst):
+    """
+    Determina daca numerele din lista au semnul alternant sau nu
+    :param lst:
+    :return True sau False:
+    """
+    if len(lst) > 1:
+        for i in range(0, len(lst) - 1):
+            if semnNumar(lst[i]) == semnNumar(lst[i + 1]):
+                return False
     return True
+
+
+def get_longest_alternating_signs(lst: list[int]):
+    """
+    Determina cea mai lunga subsecventa de numere cu semne alternante
+    :param lst - lista de numere:
+    :return lista cu cea mai lunga subsecventa de numere cu semne alternante din lst:
+    """
+    subsecventaMax2 = []
+    for i in range(len(lst)):
+        for j in range(len(lst)):
+            if toateSemneleAlternante(lst[i:j + 1]) and len(lst[i:j + 1]) > len(subsecventaMax2):
+                subsecventaMax2 = lst[i:j + 1]
+    return subsecventaMax2
+
 
 def test_get_longest_alternating_signs():
-    assert get_longest_alternating_signs([3, -5, 6, -3, 2]) == True
-    assert get_longest_alternating_signs([6, 6]) == False
-    assert get_longest_alternating_signs([21, -3, 4, -3]) == True
+    assert get_longest_alternating_signs([-3, 3, -3, 7, 9]) == [-3, 3, -3, 7]
+    assert get_longest_alternating_signs([7, 8, 9, 10]) == [7]
+    assert get_longest_alternating_signs([7, 8, -4, 9, -5, 3, 9, -4]) == [8, -4, 9, -5, 3]
+
+
+test_get_longest_alternating_signs()
+
+
+def toateNumereleAuCifrePrime(lst):
+    """
+    Determina daca toate numerele dintr-o lista au cifrele prime
+    :param lst:
+    :return True sau False:
+    """
+    for x in lst:
+        k = x
+        while k != 0:
+            aux = k % 10
+            if NrPrim(aux) is False:
+                return False
+            k = k // 10
+    return True
+
+
+def get_longest_prime_digits(lst: list[int]):
+    """
+    Determina cea mai lunga subsecventa de numere formate din cifre prime
+    :param lst:
+    :return:
+    """
+    subsecventaMax3 = []
+    for i in range(len(lst)):
+        for j in range(len(lst)):
+            if toateNumereleAuCifrePrime(lst[i:j + 1]) and len(lst[i:j + 1]) > len(subsecventaMax3):
+                subsecventaMax3 = lst[i:j + 1]
+    return subsecventaMax3
+
+
 def test_get_longest_prime_digits():
-    assert get_longest_prime_digits([2, 3, 7, 4]) == False
-    assert get_longest_prime_digits([2, 2, 2, 2]) == False
-    assert get_longest_prime_digits([2, 3, 5, 7]) == False
-def test_get_longest_sorted_asc():
-    assert get_longest_sorted_asc([1, 2, 5, 6]) == True
-    assert get_longest_sorted_asc([1, 2, 5, 3]) == False
-    assert get_longest_sorted_asc([2, 2, 3]) == True
+    assert get_longest_prime_digits([1, 72, 73, 84, 2]) == [72, 73]
+    assert get_longest_prime_digits([-3, 7, 3, 5, 8, 3, 7, 72, 5]) == [3, 7, 72, 5]
+    assert get_longest_prime_digits([1, 2, 3, 4, 5, 6, 7, 8, 9]) == [2, 3]
 
 
-def main():
+test_get_longest_prime_digits()
 
-    while True:
-        print("Optiuni: ")
-        print("1. Numerele au semne alternante. ")
-        print("2. Toate numerele sunt formate din cifre prime.")
-        print("3. Numerele sunt ordonate crescător.")
-        print("4. Terminarea programului")
-        option = input("scrie nr. optiuni: ")
-        if option == 1:
-            get_longest_alternating_signs(list)
-        if option == 2:
-            get_longest_prime_digits(list)
-        if option == 3:
-            get_longest_prime_digits(list)
-        if option == 4:
-            break
-
-
-
-if __name__ == '__main__':
-    test_get_longest_alternating_signs()
-    test_get_longest_prime_digits()
-    test_get_longest_sorted_asc()
-    main()
-
-
-
-
+while True:
+    printMenu()
+    optiune = input("Dati optiunea: ")
+    if optiune == "1":
+        l = citire_lista()
+    elif optiune == "2":
+        l1 = get_longest_all_primes(l)
+        print(l1[:])
+    elif optiune == "3":
+        l2 = get_longest_alternating_signs(l)
+        print(l2[:])
+    elif optiune == "4":
+        l3 = get_longest_prime_digits(l)
+        print(l3[:])
+    elif optiune == "x":
+        break
